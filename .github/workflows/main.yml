@@ -1,0 +1,62 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened]
+env:
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+  SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+  SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+  SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+  SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+    
+jobs:
+  test1:
+    name: integration - postgres
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: profiling_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: dependency installation
+        run: pip install -r requirements.txt
+      - name: permission given
+        run: chmod u+x run_test.sh
+      - name: "Run OG Tests - postgres"
+        run: ./run_test.sh postgres
+  test2:
+    name: integration - snowflake
+    runs-on: ubuntu-latest
+    needs: test1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: dependency installation
+        run: pip install -r requirements.txt
+      - name: permission given
+        run: chmod u+x run_test.sh
+      - name: "Run OG Tests - snowflake"
+        run: ./run_test.sh snowflake

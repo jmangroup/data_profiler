@@ -1,0 +1,21 @@
+integration_tests:
+  outputs:
+    postgres:
+        type: postgres
+        host: localhost
+        user: root
+        password: test
+        port: 5432
+        database: profiling_test
+        schema: integration_tests
+        threads: 1
+    snowflake:
+        account: ${SNOWFLAKE_ACCOUNT}
+        database: ${SNOWFLAKE_DATABASE}
+        password: ${SNOWFLAKE_PASSWORD}
+        role: ${SNOWFLAKE_ROLE}
+        schema: ${SNOWFLAKE_SCHEMA}
+        threads: 4
+        type: snowflake
+        user: ${SNOWFLAKE_USER}
+        warehouse: ${SNOWFLAKE_WAREHOUSE}

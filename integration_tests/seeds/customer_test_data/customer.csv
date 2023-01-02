@@ -1,0 +1,6 @@
+customer_id,customer_name,identity_number,mail_id,valid_from,active
+1,customer1,1,test1@gmail.com,2022-01-01,true
+2,customer2,2,test2@gmail.com,2022-02-02,false
+3,customer3,,test3@gmail.com,,false
+4,customer4,,,2022-05-02,
+5,customer5,5,,,

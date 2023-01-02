@@ -1,0 +1,6 @@
+customer_id,street,city,pincode
+1,1st street,city1,100001
+2,2nd street,city1,100001
+3,,,
+4,6th north street,city2,200001
+5,,city3,500003
