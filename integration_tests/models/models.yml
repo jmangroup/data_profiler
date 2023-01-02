@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: test_cases
+    columns:
+      - name: multiple_schema_row_count
+        tests:
+          - not_null
+      - name: single_schema_row_count
+        tests:
+          - not_null
+      - name: exclude_table_row_count
+        tests:
+          - not_null
+      - name: include_table_row_count
+        tests:
+          - not_null
+      - name: without_schema_row_count
+        tests:
+          - not_null

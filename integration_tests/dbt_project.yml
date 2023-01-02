@@ -1,0 +1,26 @@
+name: "integration_tests"
+version: "0.1.0"
+config-version: 2
+
+profile: "integration_tests"
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_modules"
+
+models:
+  materialized: table
+
+seeds:
+  integration_tests:
+    customer_test_data:
+      +schema: customer_detail
+    order_test_data:
+      +schema: order_detail

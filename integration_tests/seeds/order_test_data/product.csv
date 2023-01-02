@@ -1,0 +1,6 @@
+product_id,product_name,product_price,stock
+1,product1,200.00,58
+2,product2,350.50,30
+3,product3,,
+4,product4,500.75,5
+5,product5,,200
