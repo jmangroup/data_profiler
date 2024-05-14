@@ -4,6 +4,8 @@ on:
       - main
   pull_request_target:
     types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
 env:
   SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
   SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
