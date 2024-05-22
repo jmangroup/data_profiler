@@ -1,0 +1,2 @@
+destination_database,destination_schema,destination_table,source_database,include_schema,exclude_schema,include_tables,exclude_tables
+postgres_test,test,result,postgres_test,test,,,config_data_profile
