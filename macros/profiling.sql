@@ -46,7 +46,7 @@
 
         {% for information_schema_data in information_schema_datas %}
 
-            {% set source_table_name = information_schema_data[0] + '.' + information_schema_data[1] + '.' + information_schema_data[2] %}
+            {% set source_table_name = adapter.quote(information_schema_data[0]) + '.' + adapter.quote(information_schema_data[1]) + '.' + adapter.quote(information_schema_data[2]) %}
             {% set column_query %}
 
                 SELECT

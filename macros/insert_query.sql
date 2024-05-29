@@ -12,16 +12,16 @@
         , '{{ chunk_column[1] }}'                           AS data_type
 
         , CAST(COUNT(*) AS NUMERIC)  	                                                                                                                                                         AS row_count
-        , SUM(CASE WHEN (CASE WHEN {{ chunk_column[0] }}::VARCHAR = '' THEN NULL ELSE {{ chunk_column[0] }} END ) IS NULL THEN 0 ELSE 1 END)                                                     AS not_null_count
-        , ROUND(((SUM(CASE WHEN (CASE WHEN {{ chunk_column[0] }}::VARCHAR = '' THEN NULL ELSE {{ chunk_column[0] }} END ) IS NULL THEN 0 ELSE 1 END)) / CAST(COUNT(*) AS NUMERIC)) * 100, 2)     AS not_null_percentage
+        , SUM(CASE WHEN (CASE WHEN {{ adapter.quote(chunk_column[0]) }}::VARCHAR = '' THEN NULL ELSE {{ adapter.quote(chunk_column[0]) }} END ) IS NULL THEN 0 ELSE 1 END)                                                     AS not_null_count
+        , ROUND(((SUM(CASE WHEN (CASE WHEN {{ adapter.quote(chunk_column[0]) }}::VARCHAR = '' THEN NULL ELSE {{ adapter.quote(chunk_column[0]) }} END ) IS NULL THEN 0 ELSE 1 END)) / CAST(COUNT(*) AS NUMERIC)) * 100, 2)     AS not_null_percentage
 
-        , SUM(CASE WHEN (CASE WHEN {{ chunk_column[0] }}::VARCHAR = '' THEN NULL ELSE {{ chunk_column[0] }} END ) IS NULL THEN 1 ELSE 0 END)                                                     AS null_count
-        , ROUND(((SUM(CASE WHEN (CASE WHEN {{ chunk_column[0] }}::VARCHAR = '' THEN NULL ELSE {{ chunk_column[0] }} END ) IS NULL THEN 1 ELSE 0 END)) / CAST(COUNT(*) AS NUMERIC)) * 100, 2)     AS null_percentage
+        , SUM(CASE WHEN (CASE WHEN {{ adapter.quote(chunk_column[0]) }}::VARCHAR = '' THEN NULL ELSE {{ adapter.quote(chunk_column[0]) }} END ) IS NULL THEN 1 ELSE 0 END)                                                     AS null_count
+        , ROUND(((SUM(CASE WHEN (CASE WHEN {{ adapter.quote(chunk_column[0]) }}::VARCHAR = '' THEN NULL ELSE {{ adapter.quote(chunk_column[0]) }} END ) IS NULL THEN 1 ELSE 0 END)) / CAST(COUNT(*) AS NUMERIC)) * 100, 2)     AS null_percentage
 
-        , COUNT(DISTINCT {{ chunk_column[0] }})	                                                                                                                                                 AS distinct_count
-        , ROUND(COUNT(DISTINCT {{ chunk_column[0] }})/CAST(COUNT(*) AS NUMERIC) * 100, 2)                                                                                                        AS distinct_count_percentage
+        , COUNT(DISTINCT {{ adapter.quote(chunk_column[0]) }})	                                                                                                                                                 AS distinct_count
+        , ROUND(COUNT(DISTINCT {{ adapter.quote(chunk_column[0]) }})/CAST(COUNT(*) AS NUMERIC) * 100, 2)                                                                                                        AS distinct_count_percentage
 
-        , COUNT(DISTINCT {{ chunk_column[0] }}) = CAST(COUNT(*) AS NUMERIC)                                                                                                                      AS IS_UNIQUE
+        , COUNT(DISTINCT {{ adapter.quote(chunk_column[0]) }}) = CAST(COUNT(*) AS NUMERIC)                                                                                                                      AS IS_UNIQUE
         
         , {% if data_profiler.is_numeric_dtype((chunk_column[1]).lower()) or data_profiler.is_date_or_time_dtype((chunk_column[1]).lower()) %}
             CAST(MIN({{ adapter.quote(chunk_column[0]) }}) AS VARCHAR)
