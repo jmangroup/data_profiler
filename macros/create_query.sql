@@ -6,7 +6,7 @@
   {{ return(adapter.dispatch('create_query', 'data_profiler')(target_database, target_schema, target_table)) }}
   
 {%- endmacro %}
-
+ 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 -- This macro is used to creating the schema and table in snowflake
